@@ -5,15 +5,18 @@ const pool = require("./conexionDB"); // tu conexión a PostgreSQL
 const app = express();
 app.use(express.json());
 
+// Configuración de CORS
 app.use(cors({
-  origin: true,
+  origin: [
+    "http://localhost:5173",                 // para desarrollo local
+    "https://parcial2-1-j8hv.onrender.com"   // tu frontend en Render
+  ],
   credentials: true
 }));
 
 // ---------- Rutas ----------
 
 // Registro de usuario
-// Registrar un nuevo cliente validando que el email no esté repetido
 app.post("/clientes/registrar", async (req, res) => {
   const { nombre, email, telefono } = req.body;
   try {
@@ -32,7 +35,6 @@ app.post("/clientes/registrar", async (req, res) => {
 });
 
 // Login de usuario
-// Login de cliente por email y teléfono
 app.post("/clientes/login", async (req, res) => {
   const { email, telefono } = req.body;
   try {
@@ -48,8 +50,7 @@ app.post("/clientes/login", async (req, res) => {
   }
 });
 
-
-// Registrar un nuevo pedido para un cliente
+// Registrar un nuevo pedido
 app.post("/ordenes/registrar", async (req, res) => {
   const { cliente, patillo_nombre, note, estado } = req.body;
   try {
@@ -64,7 +65,7 @@ app.post("/ordenes/registrar", async (req, res) => {
   }
 });
 
-// Listar los pedidos de un cliente
+// Listar pedidos de un cliente
 app.get("/ordenes/:clienteId", async (req, res) => {
   try {
     const result = await pool.query(
@@ -78,7 +79,7 @@ app.get("/ordenes/:clienteId", async (req, res) => {
   }
 });
 
-// Actualizar el estado de un pedido
+// Actualizar estado de un pedido
 app.put("/ordenes/:id/estado", async (req, res) => {
   try {
     const pedido = await pool.query("SELECT * FROM ordenes WHERE id=$1", [req.params.id]);
@@ -102,4 +103,3 @@ app.put("/ordenes/:id/estado", async (req, res) => {
 // Servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
-
