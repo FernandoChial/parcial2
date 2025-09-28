@@ -1,4 +1,4 @@
-const API = "https://parcial2-2sep.onrender.com"; // tu backend
+const API =  "https://parcial2-2sep.onrender.com";//"http://localhost:3000"; // tu backend // tu backend
 
 function showScreen(screen) {
   document.getElementById('registerScreen').style.display = screen === 'register' ? 'block' : 'none';

@@ -7,10 +7,7 @@ app.use(express.json());
 
 // Configuración de CORS
 app.use(cors({
-  origin: [
-    "http://localhost:5173",                 // para desarrollo local
-    "https://parcial2-1-j8hv.onrender.com"   // tu frontend en Render
-  ],
+  origin: true,
   credentials: true
 }));
 
