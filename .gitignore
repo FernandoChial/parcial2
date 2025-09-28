@@ -1,0 +1,5 @@
+# ignorar el .env
+/BACKEND/.env 
+/BACKEND/node_modules/
+
+#hola
